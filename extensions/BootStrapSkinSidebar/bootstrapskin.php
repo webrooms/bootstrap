@@ -29,7 +29,7 @@ $wgExtensionMessagesFiles['SkinBootstrap'] = dirname(__FILE__).'/Bootstrapskin.i
 $wgResourceModules['skins.bootstrapskin'] = array(
         'styles' => array(
 		        'bootstrap/bootstrap/less/bootstrap.less' => array( 'media' => 'screen' ),
-                'bootstrap/bootstrap/css/bootstrap-blue.css' => array( 'media' => 'screen' ),
+                'bootstrap/bootstrap/css/bootstrap-black.css' => array( 'media' => 'screen' ),
                 'bootstrap/screen.css' => array( 'media' => 'screen' ),
                 'bootstrap/theme.css' => array( 'media' => 'screen' ),
 				'bootstrap/bootstrap/css/jquery-ui.min.css' => array( 'media' => 'screen' ),

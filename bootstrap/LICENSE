@@ -1,4 +1,4 @@
-All the PHP, prefs.css, and strapping.js are originally derived from
+All the PHP, prefs.css, and skin.js are originally derived from
 MediaWiki's vector theme, which is GPLv2:
 http://gnu.org/licenses/gpl-2.0
 
@@ -11,11 +11,7 @@ http://creativecommons.org/licenses/by/3.0/
 csshover.htc, the hover fixer for IE, is licensed under the LGPL v2.1:
 http://gnu.org/licenses/lgpl-2.1
 
-All other modified CSS files (i.e. bootstrap-blue.css or any other file following the bootstrap-color.css) were created by Lee Miller are licensed under the EULA;
-
-These files are classified as "closed source software!" If you have purchased this software you are granted use as per the licence agreement, see below.
-
-All other use is restricted and cannot be modified, shared, redistributed in any way either free of charge or for a price, or reverse engineering.
+All other modified CSS files (i.e. bootstrap-blue.css or any other file css that uses bootstrap-color.css) were created by Lee Miller are licensed under the EULA;
 
 Licence types;
 
@@ -59,7 +55,7 @@ The Extended License allows use of the Commercial Software in one single end pro
 
 Developer Licence
 
-The Developer License allows use of the Commercial Software in multiple end products, which you may sell to multiple clients (charge end users to access or use the end product). Redistribution of source files is strictly prohibited!
+The Developer License allows use of the Commercial Software in multiple end products, which you may sell to multiple clients (charge end users to access or use the end product). Free redistribution of source files is strictly prohibited!
 
 Permitted use
 

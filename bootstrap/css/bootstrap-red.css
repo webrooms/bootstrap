@@ -3552,6 +3552,7 @@ input[type="button"].btn-block {
   position: relative;
   display: table;
   border-collapse: separate;
+  margin-right: 72px;
 }
 .input-group[class*="col-"] {
   float: none;
@@ -8109,7 +8110,7 @@ label {
 }
 input[type='checkbox'],
 input[type='radio'] {
-  /*display: none;*/
+  display: none;
 }
 .custom-checkbox .my-ui-icon {
   border-radius: 0;
@@ -32041,3 +32042,27 @@ List-style:none;
   }
   
 .navbar .navbar-neutral {display:inline-block;}
+
+/* MOBILE UPDATE
+*******************************************************************************************************/
+
+    @media only screen
+    and (min-device-width : 321px)
+    and (max-device-width : 480px) {
+     body {font-size: 13px;}
+    }
+ 
+    @media only screen
+    and (max-width : 320px) {
+      body {font-size: 12px;}
+    }
+	
+	@media (min-width: 768px) {
+  .container-fluid {width: 100%;}
+   }
+   @media (min-width: 992px) {
+  .container-fluid {width: 100%;}
+   }
+   @media (min-width: 1200px) {
+  .container-fluid {width: 82%;}
+   }

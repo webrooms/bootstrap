@@ -47,7 +47,7 @@ class SkinBootstrap extends SkinTemplate {
 
   var _gaq = _gaq || [];
   _gaq.push(['_setAccount', 'UA-0000000-00']);
-  _gaq.push(['_setDomainName', 'yourdomain.com/with-no-http://']);
+  _gaq.push(['_setDomainName', 'entwiki.net']);
   _gaq.push(['_setAllowHash', 'false']);
   _gaq.push(['_trackPageview']);
 
@@ -62,6 +62,7 @@ class SkinBootstrap extends SkinTemplate {
 
     $out->addHeadItem('responsive', '<meta name="viewport" content="width=device-width, initial-scale=1.0">');
     $out->addModuleScripts( 'skins.bootstrapskin' );
+	$out->addModuleScripts( 'ext.BootStrapSkinSidebar' );
   }
 
   /**
@@ -115,8 +116,8 @@ class StrappingTemplate extends BaseTemplate {
     global $wgBootstrapSkinUseStandardLayout;
 
     if (!$wgSearchPlacement) {
-      $wgSearchPlacement['header'] = true;
-      $wgSearchPlacement['nav'] = false;
+      $wgSearchPlacement['header'] = false;
+      $wgSearchPlacement['nav'] = true;
       $wgSearchPlacement['footer'] = false;
     }
 
@@ -165,13 +166,13 @@ class StrappingTemplate extends BaseTemplate {
     // Output HTML Page
     $this->html( 'headelement' );
 ?>
-
 <?php if ( $wgGroupPermissions['*']['edit'] || $wgBootstrapSkinAnonNavbar || $this->data['loggedin'] ) { ?>
 <div id="userbar" class="navbar">
   <div class="navbar-inner">
-      <div class="col-md-6 pull-left">
+      <div class="col-md-6 pull-left hidden-xs hidden-sm">
       <ul id="tabs-default-lighter" class="nav nav-tabs nav-tabs-lighter">
         <li style="margin-top:10px"><?php $this->renderNavigation( array( 'EDIT' ) );?></li>
+		<li><?php $this->renderNavigation( array( 'PERSONALNAV' ) );?></li>
         <li><?php $this->renderNavigation( array( 'PAGE' ) );?></li>
 		<li><?php $this->renderNavigation( array( 'ACTIONS' ) );?></li>
 		<li><?php if ( !isset( $portals['TOOLBOX'] ) ) {$this->renderNavigation( array( 'TOOLBOX' ) );?></li>
@@ -189,6 +190,7 @@ class StrappingTemplate extends BaseTemplate {
           # Sidebar items to display in navbar
           $this->renderNavigation( array( 'SIDEBARNAV' ) );
           }
+		  
         ?>
 		
       </div>
@@ -201,19 +203,21 @@ class StrappingTemplate extends BaseTemplate {
           }
 
           # Personal menu (at the right)
-          $this->renderNavigation( array( 'PERSONAL' ) ); 
+          # $this->renderNavigation( array( 'PERSONAL' ) ); 
         ?>
       </div>
   </div>
 </div>
 <?php } ?>
-
+    <div class="hidden-xs hidden-sm">
+    <?php include("./skins/bootstrap/extensions/BootStrapSkinSidebar/Sidebar.php"); ?>
+	</div>
     <div id="mw-page-base" class="noprint"></div>
     <div id="mw-head-base" class="noprint"></div>
 
     <!-- Header -->
-    <div id="page-header" class="container <?php echo $this->data['loggedin'] ? 'signed-in' : 'signed-out'; ?>">
-      <div class="col-md-6 pull-left">
+    <div id="page-header" class="container-fluid <?php echo $this->data['loggedin'] ? 'signed-in' : 'signed-out'; ?>">
+      <div class="col-md-4 pull-left">
 
       <?php
       if ( $wgBootstrapSkinLogoLocation == 'bodycontent' ) {
@@ -222,11 +226,29 @@ class StrappingTemplate extends BaseTemplate {
 	  
 	  </div>
 
-      <div class="col-md-6 pull-right">
+      <div class="col-md-8 pull-right">
 	  <ul class="navigation nav nav-pills pull-right searchform-disabled">
-
+	  
+                <li class="active"><a href="<?php echo htmlspecialchars( $this->data['nav_urls']['mainpage']['href'] ) ?>"><i class="fa fa-home"></i> Main Page</a></li>
+                <li class="dropdown">
+                    <a class="dropdown-toggle" data-toggle="dropdown"><i class="fa fa-bars"></i> Nav<b class="caret"></b></a>
+                    <ul class="dropdown-menu text-left" role="menu">
+                        <li><a href="http://www.mediawikibootstrapskin.co.uk/index.php?title=Special:SpecialContact">Contact us</a></li>
+                        <li><a href="http://www.mediawikibootstrapskin.co.uk/forum/viewtopic.php?f=23&t=79">Download</a></li>
+                        <li class="divider"></li>
+                        <li><a href="http://www.mediawikibootstrapskin.co.uk/demo/">Join Open Wiki</a></li>
+                    </ul>
+                </li>
+                <li class="dropdown">
+                    <a href="" class="dropdown-toggle" data-toggle="dropdown"><i class="fa fa-info-circle"></i> Help <b class="caret"></b></a>
+                    <ul class="dropdown-menu text-left mwbs-color-white" role="menu">
+                        <li><a href="http://www.mediawikibootstrapskin.co.uk/forum/viewforum.php?f=5">BootstrapSkin Support</a></li>
+                        <li><a href="http://www.mediawikibootstrapskin.co.uk/forum/viewforum.php?f=31">BootstrapSkin Addons</a></li>
+                        <li class="divider"></li>
+                        <li><a href="http://www.mediawikibootstrapskin.co.uk/forum/viewforum.php?f=22">Extension Downloads</a></li>
+                    </ul>
+                </li>
       <?php
-      $this->renderNavigation( array( 'SIDEBAR' ) );
 
       if ($wgSearchPlacement['nav']) {
         $this->renderNavigation( array( 'SEARCHNAV' ) );
@@ -252,7 +274,7 @@ class StrappingTemplate extends BaseTemplate {
     } ?>
 
     <!-- content -->
-    <section id="content" class="mw-body container <?php echo $userStateClass; ?>">
+    <section id="content" class="mw-body container-fluid <?php echo $userStateClass; ?>">
       <div id="top"></div>
       <div id="mw-js-message" style="display:none;"<?php $this->html( 'userlangattributes' ) ?>></div>
       <?php if ( $this->data['sitenotice'] ): ?>
@@ -347,13 +369,13 @@ class StrappingTemplate extends BaseTemplate {
         $footerfile = dirname(__FILE__).'/footer.php';
 
         if ( file_exists($footerfile) ):
-          ?><div id="footer" class="footer container custom-footer"><?php
+          ?><div id="footer" class="footer container-fluid custom-footer"><?php
             include( $footerfile );
           ?></div><?php
         else:
       ?>
 
-      <div id="footer" class="footer container"<?php $this->html( 'userlangattributes' ) ?>>
+      <div id="footer" class="footer container-fluid"<?php $this->html( 'userlangattributes' ) ?>>
         <div class="row">
     <?php
       $footerLinks = $this->getFooterLinks();
@@ -405,6 +427,7 @@ class StrappingTemplate extends BaseTemplate {
 
     <?php        endforeach; ?>
               </li>
+			  
     <?php      endforeach; ?>
             </ul>
           <?php endif; ?>
@@ -428,7 +451,7 @@ class StrappingTemplate extends BaseTemplate {
         $mainPageLink = $this->data['nav_urls']['mainpage']['href'];
         $toolTip = Xml::expandAttributes( Linker::tooltipAndAccesskeyAttribs( 'p-logo' ) );
 ?>
-                  <ul class="nav logo-container" role="navigation"><li id="p-logo"><a href="<?php echo htmlspecialchars( $this->data['nav_urls']['mainpage']['href'] ) ?>" <?php echo Xml::expandAttributes( Linker::tooltipAndAccesskeyAttribs( 'p-logo' ) ) ?>><img src="<?php $this->text( 'logopath' ); ?>" alt="<?php $this->html('sitename'); ?>"></a><li></ul>
+                  <ul class="nav logo-container" role="navigation"><li id="p-logo"><a href="<?php echo htmlspecialchars( $this->data['nav_urls']['mainpage']['href'] ) ?>" <?php echo Xml::expandAttributes( Linker::tooltipAndAccesskeyAttribs( 'p-logo' ) ) ?>><img src="<?php $this->text( 'logopath' ); ?>" alt="<?php $this->html('sitename'); ?>" style="width:90%"></a><li></ul>
 <?php
   }
 
@@ -439,6 +462,7 @@ class StrappingTemplate extends BaseTemplate {
    * @param $elements array
    */
   private function renderNavigation( $elements ) {
+	global $wgBSSSearchBehaviour;
     global $wgVectorUseSimpleSearch;
     global $wgBootstrapSkinLoginLocation;
     global $wgBootstrapSkinDisplaySidebarNavigation;
@@ -465,8 +489,9 @@ class StrappingTemplate extends BaseTemplate {
 
           if ($navTemp) { ?>
             <div class="actions pull-left nav">
-                <a id="b-edit" href="<?php echo $navTemp['href']; ?>" class="btn"><i class="icon-edit"></i> <?php echo $navTemp['text']; ?></a>
+                <a id="b-edit" href="<?php echo $navTemp['href']; ?>" class="btn"><i class="fa fa-pencil"></i> <?php echo $navTemp['text']; ?></a>
             </div>
+			
           <?php } 
         break;
 
@@ -481,7 +506,7 @@ class StrappingTemplate extends BaseTemplate {
               foreach ( $theData as $link ) {
                   if ( array_key_exists( 'context', $link ) && $link['context'] == 'subject' ) {
               ?>
-              <a data-toggle="dropdown" class="dropdown-toggle brand" role="menu"><?php echo htmlspecialchars( $link['text'] ); ?> <b class="caret"></b></a>
+              <a data-toggle="dropdown" class="dropdown-toggle brand" role="menu"><i class="fa fa-book"></i> <?php echo htmlspecialchars( $link['text'] ); ?> <b class="caret"></b></a>
                   <?php } ?>
               <?php } ?>
               <ul aria-labelledby="<?php echo $this->msg($theMsg); ?>" role="menu" class="dropdown-menu" <?php $this->html( 'userlangattributes' ) ?>>
@@ -494,7 +519,9 @@ class StrappingTemplate extends BaseTemplate {
                   ?><li<?php echo $link['attributes'] ?>><a href="<?php echo htmlspecialchars( $link['href'] ) ?>" <?php echo $link['key'] ?> tabindex="-1"><?php echo htmlspecialchars( $link['text'] ) ?></a></li><?php
                 }
 
-          ?></ul></li></ul><?php
+          ?></ul></li></ul>
+		    	  
+		  <?php
 
         break;
 
@@ -509,7 +536,7 @@ class StrappingTemplate extends BaseTemplate {
 
             <li class="dropdown" id="p-<?php echo $theMsg; ?>" class="vectorMenu<?php if ( count($theData) == 0 ) echo ' emptyPortlet'; ?>">
 
-              <a data-toggle="dropdown" class="dropdown-toggle" role="button"><?php $this->msg($theMsg) ?> <b class="caret"></b></a>
+              <a data-toggle="dropdown" class="dropdown-toggle" role="button"><i class="fa fa-wrench"></i> <?php $this->msg($theMsg) ?> <b class="caret"></b></a>
 
               <ul aria-labelledby="<?php echo $this->msg($theMsg); ?>" role="menu" class="dropdown-menu" <?php $this->html( 'userlangattributes' ) ?>>
 
@@ -522,14 +549,17 @@ class StrappingTemplate extends BaseTemplate {
                     echo $this->makeListItem( $key, $item );
                   }
                 ?>
-              </ul>
-
-            </li>
-
+				
+            </ul>
+			
+			</li>
+		  
           </ul>
+
+          </ul>  
+		   
           <?php
         break;
-
 
         case 'VARIANTS':
 
@@ -578,7 +608,7 @@ class StrappingTemplate extends BaseTemplate {
           if (count($theData) > 0) {
             ?><ul class="nav" role="navigation">
               <li class="dropdown" id="p-<?php echo $theMsg; ?>" class="vectorMenu<?php if ( count($theData) == 0 ) echo ' emptyPortlet'; ?>">
-                <a data-toggle="dropdown" class="dropdown-toggle" role="button"><?php echo $this->msg( 'actions' ); ?> <b class="caret"></b></a>
+                <a data-toggle="dropdown" class="dropdown-toggle" role="button"><i class="fa fa-flash"></i> <?php echo $this->msg( 'actions' ); ?> <b class="caret"></b></a>
                 <ul aria-labelledby="<?php echo $this->msg($theMsg); ?>" role="menu" class="dropdown-menu" <?php $this->html( 'userlangattributes' ) ?>>
                   <?php foreach ( $theData as $link ):
 
@@ -589,9 +619,11 @@ class StrappingTemplate extends BaseTemplate {
                     ?>
 
                     <li<?php echo $link['attributes'] ?>><a href="<?php echo htmlspecialchars( $link['href'] ) ?>" <?php echo $link['key'] ?> tabindex="-1"><?php echo htmlspecialchars( $link['text'] ) ?></a></li>
+					
                   <?php endforeach; ?>
-                </ul>
-              </li>
+                </ul>				
+              </li>			  
+			  
             </ul><?php
           }
 
@@ -602,20 +634,21 @@ class StrappingTemplate extends BaseTemplate {
           $theMsg = 'personaltools';
           $theData = $this->getPersonalTools();
           $theTitle = $this->data['username'];
-          $showPersonal = false;
+          $showPersonal = true;
           foreach ( $theData as $key => $item ) {
             if ( !preg_match('/(notifications|login|createaccount)/', $key) ) {
               $showPersonal = true;
             }
           }
 
-          ?>
-          <ul class="nav pull-right" role="navigation">
+          ?>	  
+		  
+          <ul class="nav pull-left" role="navigation">
             <li class="dropdown" id="p-notifications" class="vectorMenu<?php if ( count($theData) == 0 ) echo ' emptyPortlet'; ?>">
             <?php if ( array_key_exists('notifications', $theData) ) {
               echo $this->makeListItem( 'notifications', $theData['notifications'] );
             } ?>
-            </li>
+            </li>			
             <?php if ( $wgBootstrapSkinLoginLocation == 'navbar' ): ?>
             <li class="dropdown" id="p-createaccount" class="vectorMenu<?php if ( count($theData) == 0 ) echo ' emptyPortlet'; ?>">
               <?php if ( array_key_exists('createaccount', $theData) ) {
@@ -629,7 +662,7 @@ class StrappingTemplate extends BaseTemplate {
             </li>
             <?php endif; ?>
             <?php
-            if ( $showPersonal ):
+            if ( $showPersonal = true):
             ?>
             <li class="dropdown" id="p-<?php echo $theMsg; ?>" class="vectorMenu<?php if ( !$showPersonal ) echo ' emptyPortlet'; ?>">
               <a data-toggle="dropdown" class="dropdown-toggle" role="button">
@@ -645,21 +678,42 @@ class StrappingTemplate extends BaseTemplate {
                 }
 
                 echo $this->makeListItem( $key, $item );
-              } ?>
-              </ul>
+              } ?>	  
+			  
+              </ul> 
+			  
             </li>
-            <?php endif; ?>
+			
+            <?php endif; ?>			
           </ul>
+		  <?php
+        break;		
+
+        case 'PERSONALNAV':
+          ?>
+		  <ul class="nav" role="navigation">
+		  <li class="dropdown" class="vectorMenu<?php if ( count($theData) == 0 ) echo ' emptyPortlet'; ?>">
+		  <a data-toggle="dropdown" class="dropdown-toggle" role="button"><i class="fa fa-user"></i> Personal <b class="caret"></b></a>
+          <ul class="dropdown-menu">
+          <?php foreach ( $this->getPersonalTools() as $key => $item ) { echo $this->makeListItem( $key, $item ); }?>
+          </ul>	
+          </li>
+          </ul>		  
+		  
           <?php
         break;
 
 
         case 'SEARCH':
           ?>
+		    <div class="input-group has-light">
             <form class="navbar-search" action="<?php $this->text( 'wgScript' ) ?>" id="searchform">
-              <input id="searchInput" class="search-query" type="search" accesskey="f" title="<?php $this->text('searchtitle'); ?>" placeholder="<?php $this->msg('search'); ?>" name="search" value="<?php echo htmlspecialchars ($this->data['search']); ?>">
-             <?php echo $this->makeSearchButton( 'fulltext', array( 'id' => 'mw-searchButton', 'class' => 'searchButton btn btn-party btn-sm' ) ); ?>
+              <input id="searchInput" class="form-control" type="search" accesskey="f" title="<?php $this->text('searchtitle'); ?>" placeholder="<?php $this->msg('search'); ?>" name="search" value="<?php echo htmlspecialchars ($this->data['search']); ?>">
+			  <span class="input-group-btn">
+              <?php echo $this->makeSearchButton( 'go', array( 'id' => 'mw-searchButton', 'class' => 'searchButton btn btn-default' ) ); ?>
+			  </span>
             </form>
+			</div>
 
           <?php
         break;
@@ -667,11 +721,12 @@ class StrappingTemplate extends BaseTemplate {
 
         case 'SEARCHNAV':
           ?>
-        <li>
+		  
+        <li class="hidden-xs hidden-sm">
           <a id="n-Search" class="search-link"><i class="icon-search"></i>Search</a>
           <form class="navbar-search" action="<?php $this->text( 'wgScript' ) ?>" id="nav-searchform">
-                        <input id="nav-searchInput" class="search-query" type="search" accesskey="f" title="<?php $this->text('searchtitle'); ?>" placeholder="<?php $this->msg('search'); ?>" name="search" value="<?php echo htmlspecialchars ($this->data['search']); ?>">
-                        <?php echo $this->makeSearchButton( 'fulltext', array( 'id' => 'mw-searchButton', 'class' => 'searchButton btn hidden' ) ); ?>
+                        <input id="searchInput" class="search-query" type="search" accesskey="f" title="<?php $this->text('searchtitle'); ?>" placeholder="<?php $this->msg('search'); ?>" name="search" value="<?php echo htmlspecialchars ($this->data['search']); ?>">
+                        <?php echo $this->makeSearchButton( htmlspecialchars($wgBSSSearchBehaviour), array( 'id' => 'mw-searchButton', 'class' => 'searchButton btn hidden' ) );?>
           </form>
         </li>
 
@@ -682,7 +737,7 @@ class StrappingTemplate extends BaseTemplate {
         case 'SEARCHFOOTER':
           ?>
             <form class="" action="<?php $this->text( 'wgScript' ) ?>" id="footer-search">
-              <i class="icon-search"></i><b class="border"></b><input id="footer-searchInput" class="search-query" type="search" accesskey="f" title="<?php $this->text('searchtitle'); ?>" placeholder="<?php $this->msg('search'); ?>" name="search" value="<?php echo htmlspecialchars ($this->data['search']); ?>">
+              <i class="icon-search"></i><b class="border"></b><input id="searchInput" class="search-query" type="search" accesskey="f" title="<?php $this->text('searchtitle'); ?>" placeholder="<?php $this->msg('search'); ?>" name="search" value="<?php echo htmlspecialchars ($this->data['search']); ?>">
               <?php echo $this->makeSearchButton( 'fulltext', array( 'id' => 'mw-searchButton', 'class' => 'searchButton btn hidden' ) ); ?>
             </form>
 

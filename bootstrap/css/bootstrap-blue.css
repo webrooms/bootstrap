@@ -1,4 +1,3 @@
-/*! normalize.css v3.0.0 | MIT License | git.io/normalize */
 html {
   font-family: sans-serif;
   -ms-text-size-adjust: 100%;
@@ -794,6 +793,23 @@ pre code {
   padding-left: 15px;
   padding-right: 15px;
 }
+
+@media (min-width: 768px) {
+  .container-fluid {
+    width: 100%;
+  }
+}
+@media (min-width: 992px) {
+  .container-fluid {
+    width: 100%;
+  }
+}
+@media (min-width: 1200px) {
+  .container-fluid {
+    width: 82%;
+  }
+}
+
 .row {
   margin-left: -15px;
   margin-right: -15px;
@@ -3561,6 +3577,7 @@ input[type="button"].btn-block {
   position: relative;
   display: table;
   border-collapse: separate;
+  margin-right: 72px;
 }
 .input-group[class*="col-"] {
   float: none;
@@ -25793,7 +25810,7 @@ a.bg-neutral:hover {
   float: left;
   position: relative;
   right: 15px;
-  left: -15px;
+  left: -139px;
   width: 60px;
   height: 60px;
 }
@@ -25953,7 +25970,7 @@ input.gn-search:focus {
   transform: translateX(0px);
 }
 .gn-menu-wrapper.gn-open-all {
-  width: 340px;
+  width: 17%;
 }
 .gn-menu-wrapper.gn-open-all .gn-submenu li {
   height: 60px;
@@ -29788,8 +29805,8 @@ disabled look for disabled choices in the results dropdown
 }
 /* line 7, ../sass/lightbox.sass */
 body:after {
-  content: url(../extra/lightbox2/close.png) url(../extra/lightbox2/loading.gif) url(../extra/lightbox2/prev.png) url(../extra/lightbox2/next.png);
-  display: none;
+  /*content: url(../extra/lightbox2/close.png) url(../extra/lightbox2/loading.gif) url(../extra/lightbox2/prev.png) url(../extra/lightbox2/next.png);
+  display: none;*/
 }
 /* line 11, ../sass/lightbox.sass */
 .lightboxOverlay {
@@ -32025,6 +32042,11 @@ object {
   }
 }
 
+/* Tabs
+*******************************************************************************************************/
+
+
+
 /* MEDIAWIKI OVERRIDES
 *******************************************************************************************************/
 
@@ -32060,3 +32082,13 @@ List-style:none;
   color: #FFF;
 }
 
+    @media only screen
+    and (min-device-width : 321px)
+    and (max-device-width : 480px) {
+     body {font-size: 13px;}
+    }
+ 
+    @media only screen
+    and (max-width : 320px) {
+      body {font-size: 12px;}
+    }
